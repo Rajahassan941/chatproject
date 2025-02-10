@@ -9,9 +9,9 @@ import AuthImagePattern from "../components/AuthImagePattern";
 
 // Zod validation schema
 const signUpSchema = z.object({
-  fullName: z.string().min(1, "Full Name is required"),
-  email: z.string().min(1, "Email is required").email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
+  fullName: z.string(),
+  email: z.string().email("Invalid email address"),
+  password: z.string(),
 });
 
 const SignUpPage = () => {
@@ -25,6 +25,7 @@ const SignUpPage = () => {
     resolver: zodResolver(signUpSchema),
   });
 
+
   const onSubmit = (data) => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
@@ -34,7 +35,6 @@ const SignUpPage = () => {
     }
     signup(data);
     console.log(data); // Perform signup action here
-    toast.success("Account created successfully!");
   };
 
   return (

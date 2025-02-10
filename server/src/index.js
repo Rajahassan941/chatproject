@@ -12,7 +12,7 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173", // replace with your frontend URL
+  origin: "http://localhost:5174", // replace with your frontend URL
   credentials: true, // enables setting of cookies in the response
 }))
 app.use("/api/auth", authRoutes);
