@@ -1,2 +1,35 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: cyberpunk;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+}
+@plugin "daisyui/theme" {
+  name: wireframe;
+  font-family:
+    Chalkboard,
+    comic sans ms,
+    "sans-serif";
+}
+@plugin "daisyui/theme" {
+  name: light;
+  font-family:
+    Chalkboard,
+    comic sans ms,
+    "sans-serif";
+}
+@plugin "daisyui/theme" {
+  name: dark;
+  font-family:
+    Chalkboard,
+    comic sans ms,
+    "sans-serif";
+}
