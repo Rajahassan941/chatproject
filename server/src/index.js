@@ -5,8 +5,8 @@ import cors from "cors";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import { connetDB } from "./lib/db.js";
+import { app,server } from "./lib/socket.js";
 dotenv.config();
-const app = express();
 const port = process.env.PORT;
 // to extract json  data from the body
 app.use(express.json());
@@ -16,8 +16,8 @@ app.use(cors({
   credentials: true, // enables setting of cookies in the response
 }))
 app.use("/api/auth", authRoutes);
-app.use("/api/message", messageRoutes);
-app.listen(port, () => {
+app.use("/api/messages", messageRoutes);
+server.listen(port, () => {
   console.log(`App listening on port ${port}`);
   connetDB()
 });
