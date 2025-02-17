@@ -6,8 +6,10 @@ import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import { connetDB } from "./lib/db.js";
 import { app,server } from "./lib/socket.js";
+import path from 'path'
 dotenv.config();
 const port = process.env.PORT;
+const _dirname=path.resolve()
 // to extract json  data from the body
 app.use(express.json());
 app.use(cookieParser());
@@ -17,6 +19,12 @@ app.use(cors({
 }))
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname,"../app/dist" )))
+  app.get("*",(req,res)=>{
+    res.sendFile(path.join(_dirname,"../app","dist","index.html"))
+  })
+}
 server.listen(port, () => {
   console.log(`App listening on port ${port}`);
   connetDB()
