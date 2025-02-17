@@ -9,7 +9,7 @@ import { app,server } from "./lib/socket.js";
 import path from 'path'
 dotenv.config();
 const port = process.env.PORT;
-const _dirname=path.resolve()
+const __dirname=path.resolve()
 // to extract json  data from the body
 app.use(express.json());
 app.use(cookieParser());
@@ -22,7 +22,7 @@ app.use("/api/messages", messageRoutes);
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname,"../app/dist" )))
   app.get("*",(req,res)=>{
-    res.sendFile(path.join(_dirname,"../app","dist","index.html"))
+    res.sendFile(path.join(__dirname,"../app","dist","index.html"))
   })
 }
 server.listen(port, () => {
