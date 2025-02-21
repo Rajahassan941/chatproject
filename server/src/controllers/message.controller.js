@@ -36,26 +36,33 @@ export const sendMessages = async (req, res) => {
     const { text, image } = req.body;
     const { id: recieverId } = req.params;
     const SenderId = req.user._id;
+
     let imageUrl;
     if (image) {
       const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
     }
+
+    // ✅ Save message first
     const newMessage = new Message({
-        SenderId,
-        recieverId,
-        text,
-        image:imageUrl,
-      
-    })
-    const recieverSocketId=getRecieverSocketId(recieverId)
-    if(recieverSocketId){
-      io.to(recieverSocketId).emit('newMessage',newMessage)
+      SenderId,
+      recieverId,
+      text,
+      image: imageUrl,
+    });
+
+    await newMessage.save(); // ✅ Save first
+
+    // ✅ Emit after saving (now it has `createdAt`)
+    const recieverSocketId = getRecieverSocketId(recieverId);
+    if (recieverSocketId) {
+      io.to(recieverSocketId).emit("newMessage", newMessage);
     }
-    await newMessage.save();
+
     res.status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessages controller", error.message);
     res.status(500).json({ message: "Server error" });
   }
 };
+
